@@ -20,15 +20,6 @@ function createFeatures(earthquakeData) {
     // transforms the values according to some function fn 
     // outputs an array of length n
 
-    //create the bins
-    var colors = {
-        color1 : "red",
-        color2 : "orange",
-        color3 : "yellow",
-        color4 : "green",
-        color5 : "blue"
-    };
-
     for (var i = 0; i < earthquakeData.length; i++) {
         var earthquakes = L.geoJSON(earthquakeData, {
             pointToLayer: function (feature, latlng) {
@@ -37,16 +28,16 @@ function createFeatures(earthquakeData) {
             style:()=>{
                 //programatically set color here
                 var markerColor = "";
-                if (earthquakeData[i].geometry.coordinates[2] < -10){
-                    markerColor = "red";
-                } else if (earthquakeData[i].geometry.coordinates[2] < 30){
-                    markerColor = "orange";
-                } else if (earthquakeData[i].geometry.coordinates[2] < 50){
-                    markerColor = "yellow";
+                if (earthquakeData[i].geometry.coordinates[2] < 90){
+                    markerColor = "#FF0000"; //red
                 } else if (earthquakeData[i].geometry.coordinates[2] < 70){
-                    markerColor = "green";
-                } else if (earthquakeData[i].geometry.coordinates[2] < 90) {
-                    markerColor = "blue";
+                    markerColor = "#FFA500"; //orange
+                } else if (earthquakeData[i].geometry.coordinates[2] < 50){
+                    markerColor = "#FFFF00"; //light orange
+                } else if (earthquakeData[i].geometry.coordinates[2] < 30){
+                    markerColor = "#9ACD32"; //yellow
+                } else if (earthquakeData[i].geometry.coordinates[2] < -10) {
+                    markerColor = "#008000"; //green
                 }
                 return {
                     radius: earthquakeData[i].properties.mag ? earthquakeData[i].properties.mag*3 : 1,
@@ -97,8 +88,7 @@ var legend = L.control({ position: "bottomright" });
 legend.onAdd = function(myMap) {
   var div = L.DomUtil.create("div", "legend");
 
-  div.innerHTML += "<span style='float: left; width: 1em; height: 1em; background-color: #008000; margin: 2px;'></span><span>-10 - 30</br>"; 
-  div.innerHTML += "<span style='float: left; width: 1em; height: 1em; background-color: #9ACD32; margin: 2px;'></span><span>10 - 30</span></br>";
+  div.innerHTML += "<span style='float: left; width: 1em; height: 1em; background-color: #9ACD32; margin: 2px;'></span><span>-10 - 30</span></br>";
   div.innerHTML += "<span style='float: left; width: 1em; height: 1em; background-color: #FFFF00; margin: 2px;'></span><span>30 - 50</span></br>";
   div.innerHTML += "<span style='float: left; width: 1em; height: 1em; background-color: #FFD580; margin: 2px;'></span><span>50 - 70</span><br>";
   div.innerHTML += "<span style='float: left; width: 1em; height: 1em; background-color: #FFA500; margin: 2px;'></span><span>70 - 90</span><br>";
